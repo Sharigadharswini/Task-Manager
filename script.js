@@ -345,3 +345,4 @@ function showNotification(task){
 setInterval(checkReminders, 10000);
 
 load(); render();
+
