@@ -266,7 +266,12 @@ function createTaskCard(t) {
 
   el.appendChild(content);
   el.appendChild(actions);
-
+if(t.completed){
+  const completedBadge = document.createElement('div');
+  completedBadge.className = 'badge-completed';
+  completedBadge.textContent = 'COMPLETED';
+  el.appendChild(completedBadge);
+}
   return el;
 }
 
@@ -432,4 +437,5 @@ function checkReminders() {
     });
 }
 setInterval(checkReminders, 60 * 1000);
+
 
