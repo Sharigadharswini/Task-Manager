@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Task Manager — icons bottom-right, no snooze, fixed Set time/date</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="container">
+      <aside class="card sidebar">
+        <div class="logo">
+          <img src="./multitasking_18254886.png" alt="logo">
+          <div>
+            <div class="title">TaskFlow Manager</div>
+            <div class="subtitle">
+            <span class="subtitle-word organize">• Organize</span> 
+            <span class="subtitle-word track">• Track</span> 
+            <span class="subtitle-word achieve">• Achieve</span>
+            </div>
+          </div>
+        </div>
+        <div class="stats" style="margin-top:14px">
+          <div class="stat" id="statTotal">0<br><small style="font-weight:400">Total</small></div>
+          <div class="stat" id="statCompleted">0<br><small style="font-weight:400">Completed</small></div>
+        </div>
+        <div class="add-card">
+          <label class="small">Task title</label>
+          <input id="title" type="text" placeholder="Example: Prepare monthly report">
+          <label class="small">Description</label>
+          <textarea id="desc" placeholder="Optional details..."></textarea>
+          <label class="small">Due date</label>
+          <input id="dueDate" type="date">
+          <label style="margin-top:6px">
+          <input type="checkbox" id="reminderChk"> <span>Set reminder</span>
+          </label>
+
+          <label class="small">Due time </label>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+            <button id="setTimeBtn" class="btn btn-ghost" type="button">Set time</button>
+            <div id="selectedTimeDisplay" style="font-weight:700;color:#213">—</div>
+          </div>
+          <label class="small">Assignee</label>
+          <input id="assignee" type="text" placeholder="Who is responsible?">
+          <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+            <button id="addBtn" class="btn btn-primary" type="button">Add Task</button>
+            <button id="clearBtn" class="btn btn-ghost" type="button">Clear</button>
+          </div>
+        </div>
+      </aside>
+      <main class="card">
+        <div class="header">
+          <div>
+            <div class="page-title">My Tasks</div>
+          </div>
+          <div style="text-align:right"><div id="progressText" style="font-weight:700;color:#124">0% done</div></div>
+        </div>
+        <div class="filters" style="margin-top:14px">
+        <div class="chip active" data-filter="all">All <span class="count">(0)</span></div>
+        <div class="chip" data-filter="pending">Pending <span class="count">(0)</span></div>
+        <div class="chip" data-filter="completed">Completed <span class="count">(0)</span></div>
+        </div>
+        <section id="taskList" class="task-list" style="margin-top:14px">
+        </section>
+      </main>
+    </div>
+  </div>
+  <div id="clockPopup" class="clock-popup" aria-hidden="true">
+    <div style="font-weight:700;color:#132">Pick time (12-hour)</div>
+    <div class="clock-row" style="margin-top:6px">
+      <input id="clockHour" class="time-input" type="number" min="1" max="12" placeholder="hh" />
+      <span style="font-weight:700">:</span>
+      <input id="clockMin" class="time-input" type="number" min="0" max="59" placeholder="mm" />
+      <div style="display:flex;flex-direction:column;gap:6px;margin-left:6px">
+        <button id="ampmAM" class="ampm-btn" type="button">AM</button>
+        <button id="ampmPM" class="ampm-btn" type="button">PM</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+      <button id="clockCancel" class="btn btn-ghost" type="button">Cancel</button>
+      <button id="clockSave" class="btn btn-primary" type="button">Save time</button>
+    </div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>
