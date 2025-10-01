@@ -168,115 +168,103 @@ const ICONS = {
   trash: '<path d="M6 19c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>'
 };
 
-function createTaskCard(t){
-  const el = document.createElement('article'); 
-  el.className = 'task-card' + (t.completed? ' completed':''); 
+function createTaskCard(t) {
+  const el = document.createElement('article');
+  el.className = 'task-card' + (t.completed ? ' completed' : '');
   el.dataset.id = t.id;
 
-  const content = document.createElement('div'); 
+  const content = document.createElement('div');
   content.className = 'content';
 
+  // --- Top row: title + badge
+  const top = document.createElement('div');
+  top.className = 'header-row';
 
-  const top = document.createElement('div'); 
-  top.style.display='flex'; 
-  top.style.justifyContent='space-between'; 
-  top.style.alignItems='center';
-  top.style.gap = '12px';
-
-  const title = document.createElement('div'); 
-  title.className='task-title'; 
+  const title = document.createElement('div');
+  title.className = 'task-title';
   title.textContent = t.title;
-  title.style.flex = '1 1 auto';
-  title.style.minWidth = '0';
-  title.style.overflow = 'hidden';
-  title.style.textOverflow = 'ellipsis';
-  title.style.whiteSpace = 'nowrap';
-  title.style.fontWeight = '600';
 
-  const badge = document.createElement('div'); 
-  badge.className = t.completed ? 'badge badge-completed' : (t.reminder ? 'badge badge-reminder' : 'badge badge-open');
-  badge.textContent = t.completed ? 'COMPLETED' : (t.reminder ? 'REMINDER' : 'OPEN');
-  badge.style.flex = '0 0 auto';
-  badge.style.marginLeft = '8px';
-  badge.style.whiteSpace = 'nowrap';
-  badge.style.padding = '4px 8px';
-  badge.style.fontSize = '11px';
+  const badge = document.createElement('div');
+  badge.className = t.completed
+    ? 'badge badge-completed'
+    : (t.reminder ? 'badge badge-reminder' : 'badge badge-open');
+  badge.textContent = t.completed
+    ? 'COMPLETED'
+    : (t.reminder ? 'REMINDER' : 'OPEN');
 
-  top.appendChild(title); 
+  top.appendChild(title);
   top.appendChild(badge);
   content.appendChild(top);
 
-  if(t.desc){
-    const desc = document.createElement('div'); 
-    desc.className='task-desc'; 
-    desc.textContent = t.desc; 
+  // --- Optional description
+  if (t.desc) {
+    const desc = document.createElement('div');
+    desc.className = 'task-desc';
+    desc.textContent = t.desc;
     content.appendChild(desc);
   }
 
- 
-  if(t.assignee){
+  // --- Optional assignee
+  if (t.assignee) {
     const assigneeDiv = document.createElement('div');
     assigneeDiv.className = 'task-assignee';
     assigneeDiv.textContent = 'Assignee: ' + t.assignee;
     content.appendChild(assigneeDiv);
   }
 
-  const meta = document.createElement('div'); 
-  meta.className='task-meta';
+  // --- Meta (due + added date)
+  const meta = document.createElement('div');
+  meta.className = 'task-meta';
 
-  const dueLabel = document.createElement('span'); 
-  dueLabel.className='due-label';
+  const dueLabel = document.createElement('span');
+  dueLabel.className = 'due-label';
   dueLabel.textContent = 'Due: ' + (t.due ? format12(t.due) + ' • ' + formatDateFriendly(t.due) : '—');
-
 
   if (t.isEditing) {
     dueLabel.title = 'Click to edit time';
     dueLabel.style.cursor = 'pointer';
-    dueLabel.addEventListener('click', (ev)=>{
+    dueLabel.addEventListener('click', (ev) => {
       ev.stopPropagation();
       openClock('edit', el, t);
     });
-  } else {
-    dueLabel.title = '';
-    dueLabel.style.cursor = 'default';
   }
 
   meta.appendChild(dueLabel);
 
-
-  const added = document.createElement('div'); 
+  const added = document.createElement('div');
   added.className = 'added-date';
   added.textContent = 'Added: ' + (t.created ? formatDateFriendly(t.created) : '—');
   meta.appendChild(added);
 
   content.appendChild(meta);
 
-  const actions = document.createElement('div'); 
-  actions.className='task-actions';
+  // --- Actions
+  const actions = document.createElement('div');
+  actions.className = 'task-actions';
 
-  const btnCheck = document.createElement('button'); 
-  btnCheck.className='action-btn icon-check'; 
-  btnCheck.title='Toggle complete'; 
-  btnCheck.appendChild(createIcon(ICONS.check)); 
-  btnCheck.addEventListener('click',(e)=>{ e.stopPropagation(); toggleComplete(t.id); });
+  const btnCheck = document.createElement('button');
+  btnCheck.className = 'action-btn icon-check';
+  btnCheck.title = 'Toggle complete';
+  btnCheck.appendChild(createIcon(ICONS.check));
+  btnCheck.addEventListener('click', (e) => { e.stopPropagation(); toggleComplete(t.id); });
 
-  const btnEdit = document.createElement('button'); 
-  btnEdit.className='action-btn icon-edit'; 
-  btnEdit.title='Edit task'; 
-  btnEdit.appendChild(createIcon(ICONS.edit)); 
-  btnEdit.addEventListener('click',(e)=>{ e.stopPropagation(); startEdit(t.id); });
+  const btnEdit = document.createElement('button');
+  btnEdit.className = 'action-btn icon-edit';
+  btnEdit.title = 'Edit task';
+  btnEdit.appendChild(createIcon(ICONS.edit));
+  btnEdit.addEventListener('click', (e) => { e.stopPropagation(); startEdit(t.id); });
 
-  const btnTrash = document.createElement('button'); 
-  btnTrash.className='action-btn icon-trash'; 
-  btnTrash.title='Delete'; 
-  btnTrash.appendChild(createIcon(ICONS.trash)); 
-  btnTrash.addEventListener('click',(e)=>{ e.stopPropagation(); deleteTask(t.id); });
+  const btnTrash = document.createElement('button');
+  btnTrash.className = 'action-btn icon-trash';
+  btnTrash.title = 'Delete';
+  btnTrash.appendChild(createIcon(ICONS.trash));
+  btnTrash.addEventListener('click', (e) => { e.stopPropagation(); deleteTask(t.id); });
 
-  actions.appendChild(btnCheck); 
-  actions.appendChild(btnEdit); 
+  actions.appendChild(btnCheck);
+  actions.appendChild(btnEdit);
   actions.appendChild(btnTrash);
 
-  el.appendChild(content); 
+  el.appendChild(content);
   el.appendChild(actions);
 
   return el;
@@ -444,3 +432,4 @@ function checkReminders() {
     });
 }
 setInterval(checkReminders, 60 * 1000);
+
