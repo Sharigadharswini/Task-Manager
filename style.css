@@ -227,27 +227,6 @@ textarea{
   100% { box-shadow: 0 0 4px rgba(0,255,150,0.3); }
 }
 
-.task-card .badge-open {
-  position: absolute;
-  bottom: 12px;  /* was top: 12px */
-  right: 12px;
-  background: #1e3a8a;
-  color: #bfdbfe;
-  font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 999px;
-}
-
-.task-card .badge-completed {
-  position: absolute;
-  bottom: 12px;  /* was top: 12px */
-  right: 12px;
-  background: #065f46;
-  color: #a7f3d0;
-  font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 999px;
-}
 
 .task-card .badge-reminder {
   background: #7c2d12;
