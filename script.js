@@ -318,17 +318,18 @@ chips.forEach(ch=>{
 
 function checkReminders(){
   const now = new Date();
-  tasks.forEach(t=>{
-    if(!t.reminder || t.completed || !t.due) return;
-    if(t.reminderShown) return;
+  tasks.forEach(t => {
+    if(!t.due || t.completed || t.reminderShown) return; // skip if no due, completed, or already shown
     const due = new Date(t.due);
-    const reminderMinutes = t.reminderMinutes || 5;
-    if(due - now <= reminderMinutes*60*1000 && due - now > 0){
+    // Compare hour & minute exactly
+    if(now.getHours() === due.getHours() && now.getMinutes() === due.getMinutes()){
       showNotification(t);
-      t.reminderShown = true; save();
+      t.reminderShown = true; 
+      save(); // save so it doesn't trigger again
     }
   });
 }
+
 
 function showNotification(task){
   if("Notification" in window && Notification.permission === "granted"){
@@ -345,4 +346,5 @@ function showNotification(task){
 setInterval(checkReminders, 10000);
 
 load(); render();
+
 
