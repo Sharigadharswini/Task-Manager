@@ -195,10 +195,38 @@ textarea{
 .task-card .task-meta .due-label {
   color: #93c5fd;
 }
+.task-card {
+  position: relative; /* needed for the badge to position bottom-left */
+}
+
 .task-card .badge-completed {
+  position: absolute;
+  bottom: 12px;
+  left: -120px;          /* hidden to the left at first */
   background: #065f46;
   color: #a7f3d0;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: left 0.6s ease, opacity 0.6s ease;
 }
+
+/* When task is completed */
+.task-card.completed .badge-completed {
+  left: 12px;          /* moves to bottom-left */
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(0,255,150,0.5); /* glowing effect */
+  animation: glowPulse 2s infinite;
+}
+
+/* Glow animation */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 4px rgba(0,255,150,0.3); }
+  50% { box-shadow: 0 0 12px rgba(0,255,150,0.6); }
+  100% { box-shadow: 0 0 4px rgba(0,255,150,0.3); }
+}
+
 .task-card .badge-open {
   background: #1e3a8a;
   color: #bfdbfe;
@@ -705,3 +733,4 @@ label.small {
   font-size: 12px;
   white-space: nowrap;
 }
+
