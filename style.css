@@ -202,7 +202,7 @@ textarea{
 .task-card .badge-completed {
   position: absolute;
   bottom: 12px;
-  left: -120px;          
+  left: 12px;          
   background: #065f46;
   color: #a7f3d0;
   font-weight: 700;
@@ -722,6 +722,7 @@ label.small {
   font-size: 12px;
   white-space: nowrap;
 }
+
 
 
 
