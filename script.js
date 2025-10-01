@@ -184,17 +184,17 @@ function createTaskCard(t) {
   title.className = 'task-title';
   title.textContent = t.title;
 
-  const badge = document.createElement('div');
-  badge.className = t.completed
-    ? 'badge badge-completed'
-    : (t.reminder ? 'badge badge-reminder' : 'badge badge-open');
-  badge.textContent = t.completed
-    ? 'COMPLETED'
-    : (t.reminder ? 'REMINDER' : 'OPEN');
+top.appendChild(title); 
 
-  top.appendChild(title);
+if(!t.completed){
+  const badge = document.createElement('div');
+  badge.className = t.reminder ? 'badge badge-reminder' : 'badge badge-open';
+  badge.textContent = t.reminder ? 'REMINDER' : 'OPEN';
   top.appendChild(badge);
-  content.appendChild(top);
+}
+
+content.appendChild(top);
+
 
   // --- Optional description
   if (t.desc) {
@@ -437,5 +437,6 @@ function checkReminders() {
     });
 }
 setInterval(checkReminders, 60 * 1000);
+
 
 
