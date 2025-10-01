@@ -677,7 +677,7 @@ label.small {
   word-break: break-word;
   margin-right: 8px;  
 }
-/* Ensure title and badge stay on one line without overlapping */
+/* Ensure task title doesn't overlap badge */
 .task-card > .content > div:first-child {
   display: flex;
   justify-content: space-between;
@@ -685,7 +685,6 @@ label.small {
   gap: 8px;
 }
 
-/* Make title wrap and not overflow badge */
 .task-card .task-title {
   flex: 1 1 auto;       /* take remaining space */
   overflow: visible;
@@ -693,6 +692,3 @@ label.small {
   word-break: break-word;
   margin-right: 8px;    /* spacing from badge */
 }
-
-}
-
