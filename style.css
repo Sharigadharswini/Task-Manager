@@ -213,13 +213,6 @@ textarea{
 
 }
 
-.task-card.completed .badge-completed {
-  left: 12px;
-  opacity: 1;
-  box-shadow: 0 0 8px rgba(0,255,150,0.3);
-}
-
-
 .task-card .badge-reminder {
   background: #7c2d12;
   color: #fed7aa;
@@ -438,17 +431,6 @@ textarea{
   right: 12px;
   background: #1e40af; 
   color: #bfdbfe;
-  font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 999px;
-}
-
-.task-card .badge-completed {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #065f46; 
-  color: #a7f3d0;
   font-weight: 700;
   padding: 5px 10px;
   border-radius: 999px;
@@ -695,19 +677,19 @@ label.small {
   margin-right: 8px;  
 }
 .task-card {
-  position: relative; /* allow absolute children */
+  position: relative; 
   padding-top: 6px;
 }
 
-/* Task title */
+
 .task-title {
   display: block;
   font-weight: 600;
   font-size: 15px;
   color: #f8fafc;
-  white-space: normal;       /* allow wrapping */
-  word-break: break-word;    /* break very long words */
-  padding-right: 80px;       /* leave space so badge won't overlap text */
+  white-space: normal;      
+  word-break: break-word;    
+  padding-right: 80px;       
 }
 
 /* Badge always at top-right */
@@ -722,6 +704,7 @@ label.small {
   font-size: 12px;
   white-space: nowrap;
 }
+
 
 
 
