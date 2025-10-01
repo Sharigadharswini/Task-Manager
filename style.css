@@ -677,18 +677,29 @@ label.small {
   word-break: break-word;
   margin-right: 8px;  
 }
-/* Ensure task title doesn't overlap badge */
-.task-card > .content > div:first-child {
+/* === Task card layout improvements === */
+.header-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* align badge and title at top */
+  align-items: flex-start;
   gap: 8px;
 }
 
-.task-card .task-title {
-  flex: 1 1 auto;       /* take remaining space */
-  overflow: visible;
-  white-space: normal;  /* allow wrapping */
-  word-break: break-word;
-  margin-right: 8px;    /* spacing from badge */
+.task-title {
+  flex: 1;
+  font-weight: 600;
+  font-size: 15px;
+  color: #f8fafc;
+  white-space: normal;   /* allow wrapping */
+  word-break: break-word; /* break long words if needed */
 }
+
+.badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
