@@ -660,4 +660,22 @@ label.small {
     font-size: 1em;
   }
 }
+.task-card > .content > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; 
+  gap: 8px;
+}
+
+.task-card .task-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #172;
+  flex: 1 1 auto;      
+  overflow: visible;   
+  white-space: normal;  
+  word-break: break-word;
+  margin-right: 8px;  
+}
+
 }
