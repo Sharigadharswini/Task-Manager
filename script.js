@@ -19,13 +19,6 @@ function formatDateFriendly(iso){
   const d = new Date(iso); return d.toLocaleDateString([], {month:'short', day:'numeric', year:'numeric'});
 }
 
-// ✅ Request Notification permission on page load
-if ("Notification" in window && Notification.permission !== "granted") {
-    Notification.requestPermission().then(permission => {
-        console.log("Notification permission:", permission);
-    });
-}
-
 let tasks = [];
 function load(){ 
   try{ const raw = localStorage.getItem('taskflow_tasks'); tasks = raw ? JSON.parse(raw) : []; } 
@@ -236,7 +229,9 @@ function createTaskCard(t) {
 
   const btnCheck = document.createElement('button'); btnCheck.title='Complete';
   btnCheck.appendChild(createIcon(ICONS.check));
-  btnCheck.addEventListener('click', ()=>{ t.completed = !t.completed; save(); });
+  btnCheck.addEventListener('click', ()=>{
+    t.completed = !t.completed; save();
+  });
   actions.appendChild(btnCheck);
 
   const btnEdit = document.createElement('button'); btnEdit.title='Edit';
@@ -302,7 +297,7 @@ addBtn.addEventListener('click', ()=>{
     t.due=due; t.reminder=reminder; t.reminderMinutes=reminderMinutes;
     currentEditingTaskId=null; addBtn.textContent='Add Task';
   } else {
-    tasks.push({id: uid(), title, desc, assignee, due, reminder, reminderMinutes, completed:false, reminderShown:false});
+    tasks.push({id: uid(), title, desc, assignee, due, reminder, reminderMinutes, completed:false});
   }
 
   titleEl.value=''; descEl.value=''; assigneeEl.value=''; dueDateEl.value=''; tempSelected=null; selectedTimeDisplay.textContent='';
@@ -321,31 +316,33 @@ chips.forEach(ch=>{
   });
 });
 
-// ✅ Fixed checkReminders function
 function checkReminders(){
-    const now = new Date();
-    tasks.forEach(t=>{
-        if(!t.reminder || t.completed || !t.due || t.reminderShown) return;
-
-        const due = new Date(t.due);
-        const remindBefore = (t.reminderMinutes || 0) * 60000;
-        if(now >= (due - remindBefore)){
-            showNotification(t);
-            t.reminderShown = true;
-            save();
-        }
-    });
+  const now = new Date();
+  tasks.forEach(t=>{
+    if(!t.reminder || t.completed || !t.due) return;
+    if(t.reminderShown) return;
+    const due = new Date(t.due);
+    const reminderMinutes = t.reminderMinutes || 5;
+    if(due - now <= reminderMinutes*60*1000 && due - now > 0){
+      showNotification(t);
+      t.reminderShown = true; save();
+    }
+  });
 }
 
 function showNotification(task){
-    if("Notification" in window && Notification.permission === "granted"){
-        new Notification('Task Reminder', {body: task.title, tag: task.id});
-    } else {
-        alert('Reminder: ' + task.title);
-    }
+  if("Notification" in window && Notification.permission === "granted"){
+    new Notification('Task Reminder', {body: task.title, tag: task.id});
+  } else if("Notification" in window && Notification.permission !== "denied"){
+    Notification.requestPermission().then(p=>{
+      if(p==="granted") new Notification('Task Reminder',{body: task.title, tag: task.id});
+    });
+  } else {
+    alert('Reminder: '+task.title);
+  }
 }
 
-// Check reminders every 10 seconds
 setInterval(checkReminders, 10000);
 
 load(); render();
+
