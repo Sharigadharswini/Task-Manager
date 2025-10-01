@@ -677,5 +677,22 @@ label.small {
   word-break: break-word;
   margin-right: 8px;  
 }
+/* Ensure title and badge stay on one line without overlapping */
+.task-card > .content > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* align badge and title at top */
+  gap: 8px;
+}
+
+/* Make title wrap and not overflow badge */
+.task-card .task-title {
+  flex: 1 1 auto;       /* take remaining space */
+  overflow: visible;
+  white-space: normal;  /* allow wrapping */
+  word-break: break-word;
+  margin-right: 8px;    /* spacing from badge */
+}
 
 }
+
